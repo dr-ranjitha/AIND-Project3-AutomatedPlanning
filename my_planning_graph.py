@@ -20,7 +20,9 @@ class ActionLayer(BaseActionLayer):
         layers.ActionNode
         """
         # TODO: implement this function
-        raise NotImplementedError
+        #raise NotImplementedError
+        negated_effects = [effect for effect in self.children[actionA] if ~effect in self.children[actionB]]
+        return bool(negated_effects)
 
     def _interference(self, actionA, actionB):
         """ Return True if the effects of either action negate the preconditions of the other 
