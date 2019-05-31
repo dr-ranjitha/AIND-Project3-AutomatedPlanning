@@ -53,7 +53,9 @@ class ActionLayer(BaseActionLayer):
         layers.BaseLayer.parent_layer
         """
         # TODO: implement this function
-        raise NotImplementedError
+        #raise NotImplementedError
+        mutex_precond = [precondA for precondA in self.parents[actionA] for precondB in self.parents[actionB] if self.parent_layer.is_mutex(precondA, precondB)]
+        return bool(mutex_precond)
 
 
 class LiteralLayer(BaseLiteralLayer):
