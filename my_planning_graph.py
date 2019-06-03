@@ -227,7 +227,20 @@ class PlanningGraph:
         WARNING: you should expect long runtimes using this heuristic on complex problems
         """
         # TODO: implement setlevel heuristic
-        raise NotImplementedError
+        #raise NotImplementedError
+        level = 0
+        goals = self.goal.copy()
+        while not self._is_leveled:
+            all_goals_met = True
+            layer = self.literal_layers[-1]
+            if goals.issubset(layer):                
+                goals_are_mutex = any([layer.is_mutex(goalA, goalB) for goalA in goals for goalB in goals])
+                if not goals_are_mutex:
+                    return level
+            else:
+                all_goals_met = False
+                self._extend() #add the next literal layer
+            level = level + 1
 
     ##############################################################################
     #                     DO NOT MODIFY CODE BELOW THIS LINE                     #
